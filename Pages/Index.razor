@@ -1,0 +1,54 @@
+﻿@page "/"
+
+<PageTitle>Bin2Dec-Blazor</PageTitle>
+<MudContainer>
+    <MudText class="mb-6">2進数を10進数に変換します。</MudText>
+
+    <MudStack>
+        <MudTextField
+            Immediate="true"
+            @bind-Value="BinaryValue"
+            Label="2進数を入力してください。"
+        >
+        </MudTextField>
+
+        <MudField
+            Label="10進数"
+            Variant="Variant.Filled">
+            @DecimalValue
+        </MudField>
+    </MudStack>
+</MudContainer>
+
+@code
+{
+    private string? binaryValue;
+    private string? BinaryValue
+    {
+        get
+        {
+            return binaryValue;
+        }
+
+        set
+        {
+            foreach (var c in value)
+            {
+                if (c != '0' && c != '1')
+                {
+                    return;
+                }
+            }
+
+            binaryValue = value;
+        }
+    }
+
+    private int DecimalValue
+    {
+        get
+        {
+            return (binaryValue == "") ? 0 : Convert.ToInt32(binaryValue, 2);
+        }
+    }
+}
